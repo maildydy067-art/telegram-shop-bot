@@ -1,0 +1,9 @@
+Collecting asyncpg
+  Using cached asyncpg-0.31.0-cp311-cp311-win_amd64.whl.metadata (4.5 kB)
+Using cached asyncpg-0.31.0-cp311-cp311-win_amd64.whl (584 kB)
+Installing collected packages: asyncpg
+  Attempting uninstall: asyncpg
+    Found existing installation: asyncpg 0.31.0
+    Uninstalling asyncpg-0.31.0:
+      Successfully uninstalled asyncpg-0.31.0
+Successfully installed asyncpg-0.31.0
