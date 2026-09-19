@@ -3,11 +3,12 @@ from sqlalchemy.orm import sessionmaker
 from config import DATABASE_URL
 from database.models import Base
 
-# psycopg driver automatically handles SSL and Neon connections
+# Explicitly use asyncpg driver for Neon database
 engine = create_async_engine(
-    DATABASE_URL, 
+    DATABASE_URL,
     echo=False,
-    pool_pre_ping=True
+    pool_pre_ping=True,
+    future=True
 )
 
 async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
