@@ -4,13 +4,10 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
+from keep_alive import keep_alive
 
-# ==========================================
-# FIX FOR WINDOWS PSYCOPG ASYNC ISSUE
-# ==========================================
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-# ==========================================
 
 from config import BOT_TOKEN
 from database.database import init_db
@@ -18,7 +15,8 @@ from sheets_manager import auto_sync_sheets, sheets
 from handlers import admin, user
 
 async def main():
-    # Logging setup
+    keep_alive()
+    
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(message)s"
@@ -37,14 +35,11 @@ async def main():
     )
     dp = Dispatcher()
     
-    # Admin router pehle, user baad mein (taake admin buttons pehle check hon)
     dp.include_router(admin.router)
     dp.include_router(user.router)
     
-    # Background task start karna (Sheets auto-sync har 2 minute baad)
     asyncio.create_task(auto_sync_sheets())
     
-    # Bot ko polling par lagana
     try:
         logging.info("✅ Bot successfully started!")
         await dp.start_polling(bot)

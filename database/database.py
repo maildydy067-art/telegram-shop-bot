@@ -3,12 +3,10 @@ from sqlalchemy.orm import sessionmaker
 from config import DATABASE_URL
 from database.models import Base
 
-# Explicitly use asyncpg driver for Neon database
 engine = create_async_engine(
     DATABASE_URL,
     echo=False,
-    pool_pre_ping=True,
-    future=True
+    pool_pre_ping=True
 )
 
 async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
